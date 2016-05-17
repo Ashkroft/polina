@@ -160,6 +160,7 @@ void change(char *command) {
 }
 
 void finding(char *command) {
+    int i;
     if (strlen(command) > 0) {
         bool itName, itNumber, isFound;
         isFound = false;
@@ -170,7 +171,7 @@ void finding(char *command) {
             command = low(command);
         }
         cur = head;
-        for (int i = 0; i < phoneBook.size; i++) {
+        for (i = 0; i < phoneBook.size; i++) {
             itNumber = 0;
             if (itName) {
                 if (strstr(low(cur->name), command)) {
