@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
     person *modified;
     char *command;
     fileName = argv[1];
-    file = fopen(fileName, "r+");
+    file = fopen(fileName, "at+");
     if (file == NULL) {
         return 0;
     }
