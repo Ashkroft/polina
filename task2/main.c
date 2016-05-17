@@ -206,7 +206,6 @@ int main(int argc, char *argv[]) {
     phoneBook.size = 0;
     head = phoneBook.people;
     rewind(file);
-    current.id = -1;
     while (fscanf(file, "%d", &current.id) != EOF) {
         current.name = read(file);
         current.phoneNumber = read(file);
