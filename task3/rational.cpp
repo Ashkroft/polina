@@ -24,7 +24,7 @@ rational::rational(int a, int b) {
     den = b;
     normalize();
 }
-
+ 
 int rational::getNum() const { return num; }
 
 int rational::getDenom() const { return den; }
