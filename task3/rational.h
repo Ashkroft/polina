@@ -1,3 +1,6 @@
+#ifndef RATIONAL_RATIONAL_H
+#define RATIONAL_RATIONAL_H
+
 class rational {
 public:
     rational(int i);
@@ -14,3 +17,5 @@ private:
     int den;
     void normalize();
 };
+
+#endif //RATIONAL_RATIONAL_H
