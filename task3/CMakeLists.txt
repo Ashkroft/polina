@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(rational)
 
-add_library(rational SHARED rational.cpp)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-install (FILES rational.h DESTINATION include)
-install (TARGETS rational DESTINATION lib)
+set(SOURCE_FILES rational.cpp rational.h)
+add_executable(rational ${SOURCE_FILES} rational.h)
