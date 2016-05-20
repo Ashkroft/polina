@@ -76,11 +76,11 @@ lazy_string::get_char lazy_string::operator[](size_t i) {
 lazy_string::get_char::get_char(lazy_string *str, size_t i) : lazy_str(str), index(i) { }
 
 lazy_string::get_char &lazy_string::get_char::operator=(char c) {
-    (*lazy_str).lock();
     if ((*lazy_str).word.use_count() > 1) {
         (*lazy_str).start = 0;
         (*lazy_str).word = make_shared<string>(lazy_str->word->substr((*lazy_str).start, (*lazy_str).number));
     }
+    (*lazy_str).lock();
     (*lazy_str->word)[(*lazy_str).start + index] = c;
     (*lazy_str).unlock();
     return *this;
