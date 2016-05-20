@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <c++/mutex>
+#include <mutex>
 #include "lazy_string.h"
 
 using namespace std;
