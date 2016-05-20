@@ -7,9 +7,6 @@
 
 using namespace std;
 
-lazy_string::lazy_string() {
-    (*this).start = (*this).number = 0;
-    this->word = make_shared<string>("");
 }
 
 lazy_string::lazy_string(const string &str) {
