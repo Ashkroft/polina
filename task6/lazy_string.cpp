@@ -85,3 +85,4 @@ ostream &operator<<(ostream &output, lazy_string &str) {
         output << str[i];
     return output;
 }
+ 
