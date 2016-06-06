@@ -8,45 +8,7 @@
 
 using namespace std;
 
-threads::threads() : readers(0), locked(false), rec(0) {}
 
-threads::threads(const threads &lock) :
-        readers((int) lock.readers), locked((bool) lock.locked), rec((int) lock.rec) {}
-
-inline void threads::readLock() const {
-    if(this->threadId == this_thread::get_id()) {
-        ++this->readers;
-        return;
-    }
-    while(locked)
-        this_thread::yield();
-    ++this->readers;
-}
-
-inline void threads::readUnlock() const {
-    --this->readers;
-}
-
-inline void threads::writeLock() {
-    thread::id id = this_thread::get_id();
-    if(id == this->threadId) {
-        ++this->rec;
-        return;
-    }
-    while(atomic_exchange_explicit(&locked, true, memory_order_acquire))
-        this_thread::yield();
-    while(this->readers > 0)
-        this_thread::yield();
-    this->threadId = id;
-    ++this->rec;
-}
-
-inline void threads::writeUnlock() {
-    if(--this->rec == 0) {
-        this->threadId = thread::id();
-        atomic_store_explicit(&locked, false, memory_order_release);
-    }
-}
 
 lazy_string::lazy_string() {
     (*this).start = (*this).number = 0;
@@ -143,4 +105,44 @@ ostream &operator<<(ostream &output, lazy_string &str) {
         output << str[i];
     str.lock->readUnlock();
     return output;
+}
+
+threads::threads() : readers(0), locked(false), rec(0) {}
+
+threads::threads(const threads &lock) :
+        readers((int) lock.readers), locked((bool) lock.locked), rec((int) lock.rec) {}
+
+inline void threads::readLock() const {
+    if(this->threadId == this_thread::get_id()) {
+        ++this->readers;
+        return;
+    }
+    while(locked)
+        this_thread::yield();
+    ++this->readers;
+}
+
+inline void threads::readUnlock() const {
+    --this->readers;
+}
+
+inline void threads::writeLock() {
+    thread::id id = this_thread::get_id();
+    if(id == this->threadId) {
+        ++this->rec;
+        return;
+    }
+    while(atomic_exchange_explicit(&locked, true, memory_order_acquire))
+        this_thread::yield();
+    while(this->readers > 0)
+        this_thread::yield();
+    this->threadId = id;
+    ++this->rec;
+}
+
+inline void threads::writeUnlock() {
+    if(--this->rec == 0) {
+        this->threadId = thread::id();
+        atomic_store_explicit(&locked, false, memory_order_release);
+    }
 }
